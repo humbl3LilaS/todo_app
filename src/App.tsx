@@ -1,31 +1,30 @@
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {superbase} from "./lib/helper/superbaseClient.ts";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
+import {useUser} from "./store/userStore.ts";
+import SideNav from "./components/Nav/SideNav.tsx";
 
 const queryClient = new QueryClient();
 
 function App() {
 
-    const [user, setUser] = useState<any>(null);
+    //TODO: to implement  dedicated login system
+    const {setUser} = useUser();
 
-    const login = async () => {
-        await superbase.auth.signInWithOAuth({
-            provider: "github"
-        });
-    };
 
     useEffect(() => {
-        const session = superbase.auth.getUser();
-        session.then(data => setUser(data.data?.user));
-    }, []);
+        const fetchUser = async () => {
+            const session = await superbase.auth.getUser();
+            setUser(session.data.user);
+        };
+        fetchUser();
+    });
 
 
     return (
         <QueryClientProvider client={queryClient}>
-            <h1 className={"font-black text-cyan-900 text-3xl"}>Hello todo app</h1>
-            {user && <h1>Authenticated....</h1>}
-            <button onClick={login}>login with github</button>
+            <SideNav/>
             <ReactQueryDevtools initialIsOpen={false}/>
         </QueryClientProvider>
     );
