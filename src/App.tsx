@@ -1,8 +1,5 @@
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
-import {superbase} from "./lib/helper/superbaseClient.ts";
-import {useEffect} from "react";
-import {useUser} from "./store/userStore.ts";
 import SideNav from "./components/Nav/SideNav.tsx";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Home from "./components/Home/Home.tsx";
@@ -44,18 +41,17 @@ const router = createBrowserRouter([
 
 
 function App() {
+    //Todo: build a dedicated login system for later
 
-    //TODO: to implement  dedicated login system
-    const {setUser} = useUser();
-
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            const session = await superbase.auth.getUser();
-            setUser(session.data.user);
-        };
-        fetchUser();
-    });
+    // const {setUser} = useUser();
+    //
+    // useEffect(() => {
+    //     const auth = async () => {
+    //         const session = await superbase.auth.getUser();
+    //         setUser(session.data.user);
+    //     };
+    //     auth();
+    // }, [setUser]);
 
 
     return (

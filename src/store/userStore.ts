@@ -3,11 +3,11 @@ import {create} from "zustand";
 import {immer} from "zustand/middleware/immer";
 
 type State = {
-    user: User | null;
+    user: User | null | undefined;
 }
 
 type Action = {
-    setUser: (user: User | null) => void;
+    setUser: (user: User | undefined | null) => void;
 }
 
 type UserStore = State & Action;
