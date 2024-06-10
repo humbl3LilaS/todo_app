@@ -1,6 +1,6 @@
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
-import SideNav from "./components/Nav/SideNav.tsx";
+import SideNav from "./components/SideNav/SideNav.tsx";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Home from "./components/Home/Home.tsx";
 import Today from "./components/Today/Today.tsx";

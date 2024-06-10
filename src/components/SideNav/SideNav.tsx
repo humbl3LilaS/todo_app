@@ -6,13 +6,13 @@ import Home from "../../../public/icon/home.svg";
 import Star from "../../../public/icon/star-regular.svg";
 import TrashBin from "../../../public/icon/trash.svg";
 import Icon from "./Icon.tsx";
-import AddNewNote from "../AddNewNote.tsx";
+import PopupButton from "../Popup/PopupButton.tsx";
 import {Link, Outlet} from "react-router-dom";
 
 
 export default function SideNav() {
     return (
-        <section className={"flex justify-between items-center"}>
+        <section className={"flex justify-between items-center relative"}>
             <aside className={"w-1/5 h-screen border-r-[1.5px] border-r-gray-300"}>
                 <div className={"w-full h-full pt-16 pb-8 px-8"}>
                     <nav className={"h-[87%]"}>
@@ -43,12 +43,11 @@ export default function SideNav() {
                             </NavItem>
                         </ul>
                     </nav>
-                    <AddNewNote/>
+                    <PopupButton/>
                 </div>
             </aside>
             <Outlet/>
         </section>
-    )
-        ;
+    );
 }
 
