@@ -6,17 +6,20 @@ import Today from "./components/Today/Today.tsx";
 import Calendar from "./components/Calendar/Calendar.tsx";
 import Completed from "./components/Completed/Completed.tsx";
 import Trash from "./components/Trash/Trash.tsx";
+import {userLoader} from "./query/loader.ts";
+import Home from "./components/Home/Home.tsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
     {
         path: "/",
         element: <SideNav/>,
+        id: "root",
+        loader: userLoader(queryClient),
         children: [
             {
                 index: true,
-                // element: <Home/>,
-                element: <h1>Home element</h1>
+                element: <Home/>,
             },
             {
                 path: "today",

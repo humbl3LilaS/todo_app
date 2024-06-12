@@ -6,6 +6,8 @@ import PrioritySelector from "../Popup/PrioritySelector.tsx";
 import {Button} from "../ui/button.tsx";
 import {useFormStore} from "../../store/formStore.tsx";
 import {createTodos} from "../../query/db.ts";
+import {useQuery} from "@tanstack/react-query";
+import {getUserQuery} from "../../query/query.ts";
 
 const AddTodoFormSchema = z.object({
     content: z.string().min(1, {message: "Content should not be empty"}),
@@ -14,6 +16,8 @@ const AddTodoFormSchema = z.object({
 type AddTodoFormSchemaType = z.infer<typeof AddTodoFormSchema>;
 
 export default function AddTodoForm() {
+    const {data: userId} = useQuery(getUserQuery());
+
     const {
         register,
         handleSubmit,
@@ -23,14 +27,11 @@ export default function AddTodoForm() {
     const {due, priority} = useFormStore();
 
     const onSubmit: SubmitHandler<AddTodoFormSchemaType> = (data) => {
-        console.log(data);
-        console.log(due);
-        console.log(priority);
         createTodos({
             due_at: due ? due : null,
             content: data.content,
             priority: priority ? priority : null,
-        });
+        }, userId ?? "");
     };
 
     return (
