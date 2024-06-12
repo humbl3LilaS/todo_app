@@ -5,9 +5,9 @@ import DatePicker from "../Popup/DatePicker.tsx";
 import PrioritySelector from "../Popup/PrioritySelector.tsx";
 import {Button} from "../ui/button.tsx";
 import {useFormStore} from "../../store/formStore.tsx";
-import {createTodos} from "../../query/db.ts";
 import {useQuery} from "@tanstack/react-query";
 import {getUserQuery} from "../../query/query.ts";
+import {useCreateTodo} from "../../query/mutation.ts";
 
 const AddTodoFormSchema = z.object({
     content: z.string().min(1, {message: "Content should not be empty"}),
@@ -17,7 +17,7 @@ type AddTodoFormSchemaType = z.infer<typeof AddTodoFormSchema>;
 
 export default function AddTodoForm() {
     const {data: userId} = useQuery(getUserQuery());
-
+    const {mutateAsync} = useCreateTodo(userId ?? "");
     const {
         register,
         handleSubmit,
@@ -26,12 +26,19 @@ export default function AddTodoForm() {
 
     const {due, priority} = useFormStore();
 
-    const onSubmit: SubmitHandler<AddTodoFormSchemaType> = (data) => {
-        createTodos({
+    const onSubmit: SubmitHandler<AddTodoFormSchemaType> = async (data) => {
+        // createTodos({
+        //     due_at: due ? due : null,
+        //     content: data.content,
+        //     priority: priority ? priority : null,
+        // }, userId ?? "");
+
+        await mutateAsync({
             due_at: due ? due : null,
             content: data.content,
             priority: priority ? priority : null,
-        }, userId ?? "");
+        });
+
     };
 
     return (

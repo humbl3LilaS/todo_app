@@ -18,14 +18,14 @@ export const getUser = async () => {
 
 
 export const createTodos = async (input: TodoDetails["todos_details"], userId: string) => {
-    const {data: detailResponse, status} = await superbase.from("todos_details").insert({...input}).select("id");
-    console.log(detailResponse);
-    if (status === 201 && detailResponse) {
-        const {data: response} = await superbase.from("todos").insert({
-            user_id: userId,
-            todo_id: detailResponse[0].id,
-        });
-        return response;
-    }
+    const {data: detailResponse} = await superbase.from("todos_details")
+        .insert({...input})
+        .select()
+        .single();
+    const {data} = await superbase.from("todos").insert({
+        user_id: userId,
+        todo_id: detailResponse?.id,
+    }).select("id").single();
+    return detailResponse as TodoDetails["todos_details"];
 };
 
