@@ -6,6 +6,7 @@ import PrioritySelector from "../Popup/PrioritySelector.tsx";
 import {Button} from "../ui/button.tsx";
 import {useFormStore} from "../../store/formStore.tsx";
 import {useCreateTodo} from "../../query/mutation.ts";
+import {DialogClose} from "../ui/dialog.tsx";
 
 const AddTodoFormSchema = z.object({
     content: z.string().min(1, {message: "Content should not be empty"}),
@@ -18,11 +19,11 @@ export default function AddTodoForm() {
     const {
         register,
         handleSubmit,
-        formState: {errors}
+        formState: {errors, isValid},
+        getFieldState,
     } = useForm<AddTodoFormSchemaType>({resolver: zodResolver(AddTodoFormSchema)});
 
     const {due, priority} = useFormStore();
-
     const onSubmit: SubmitHandler<AddTodoFormSchemaType> = async (data) => {
         await mutateAsync({
             due_at: due ? due : null,
@@ -30,6 +31,7 @@ export default function AddTodoForm() {
             priority: priority ? priority : null,
         });
     };
+
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -52,7 +54,13 @@ export default function AddTodoForm() {
                 </label>
                 <PrioritySelector/>
             </div>
-            <Button variant={"outline"} type={"submit"}>Create</Button>
+            <DialogClose asChild>
+                <Button variant={"outline"} type={"submit"}
+                        disabled={!getFieldState("content").isDirty || !isValid}
+                >
+                    Create
+                </Button>
+            </DialogClose>
         </form>
     );
 }
