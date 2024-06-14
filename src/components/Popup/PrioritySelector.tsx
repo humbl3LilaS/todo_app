@@ -14,10 +14,10 @@ export default function PrioritySelector() {
 
     return (
         <Select onValueChange={(value) => setState(parseInt(value))}>
-            <SelectTrigger>
-                <SelectValue placeholder={"Set Priority"}/>
+            <SelectTrigger className={"w-[160px]"}>
+                <SelectValue placeholder={"Set Priority"} className={"w-[160px]"}/>
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className={"w-[160px]"}>
                 <SelectItem value={"1"}>1</SelectItem>
                 <SelectItem value={"2"}>2</SelectItem>
                 <SelectItem value={"3"}>3</SelectItem>

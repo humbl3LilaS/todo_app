@@ -8,23 +8,23 @@ import {useFormStore} from "../../store/formStore.tsx";
 import {useCreateTodo} from "../../query/mutation.ts";
 import {DialogClose} from "../ui/dialog.tsx";
 
-const AddTodoFormSchema = z.object({
+const CreateTodoFormSchema = z.object({
     content: z.string().min(1, {message: "Content should not be empty"}),
 });
 
-type AddTodoFormSchemaType = z.infer<typeof AddTodoFormSchema>;
+type CreateTodoFromSchemaType = z.infer<typeof CreateTodoFormSchema>;
 
-export default function AddTodoForm() {
+export default function CrateTodoForm() {
     const {mutateAsync} = useCreateTodo();
     const {
         register,
         handleSubmit,
         formState: {errors, isValid},
         getFieldState,
-    } = useForm<AddTodoFormSchemaType>({resolver: zodResolver(AddTodoFormSchema)});
+    } = useForm<CreateTodoFromSchemaType>({resolver: zodResolver(CreateTodoFormSchema)});
 
     const {due, priority} = useFormStore();
-    const onSubmit: SubmitHandler<AddTodoFormSchemaType> = async (data) => {
+    const onSubmit: SubmitHandler<CreateTodoFromSchemaType> = async (data) => {
         await mutateAsync({
             due_at: due ? due : null,
             content: data.content,
@@ -35,21 +35,24 @@ export default function AddTodoForm() {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <label htmlFor={"content"}>
+            <div className={"mb-4"}>
+                <label htmlFor={"content"} className={"mb-2 block font-semibold capitalize"}>
                     content
                 </label>
-                <textarea id={"content"} {...register("content")}/>
+                <textarea id={"content"}
+                          className={"w-full h-20 p-4 border border-stone-600 focus:outline-none"}
+                          {...register("content")}
+                />
                 {errors.content && <h1>Content shouldn't be empty</h1>}
             </div>
-            <div>
-                <label htmlFor={"due_at"}>
+            <div className={"mb-4 flex justify-start items-center gap-x-14"}>
+                <label htmlFor={"due_at"} className={"mb-2 block font-semibold capitalize"}>
                     Due
                 </label>
                 <DatePicker/>
             </div>
-            <div>
-                <label>
+            <div className={"mb-4 flex justify-start items-center gap-x-8"}>
+                <label className={"mb-2 block font-semibold capitalize"}>
                     Priority
                 </label>
                 <PrioritySelector/>
