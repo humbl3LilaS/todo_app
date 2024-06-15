@@ -2,6 +2,7 @@ import Container from "../Helper/Container.tsx";
 import {getUserQuery, useGetTodosQuery} from "../../query/query.ts";
 import {useTodos} from "../../hook/useTodos.ts";
 import {useQuery} from "@tanstack/react-query";
+import TodoItem from "../Todo/TodoItem.tsx";
 
 export default function Home() {
     const {data: userId} = useQuery(getUserQuery());
@@ -29,8 +30,12 @@ export default function Home() {
             {
                 overdue &&
               <div>
-                <h2 className={"pb-3 border-b border-b-stone-600 text-2xl font-bold text-stone-700"}>Overdue</h2>
-                  {overdue.map(todo => <p key={todo.todos_details.id}>{todo.todos_details.content}</p>)}
+                <h2 className={"pb-3 mb-4  border-b border-b-stone-600 text-2xl font-bold text-stone-700"}>
+                  Overdue
+                </h2>
+                <div>
+                    {overdue.map(todo => <TodoItem key={todo.todos_details.id} data={todo.todos_details}/>)}
+                </div>
               </div>
             }
 

@@ -1,5 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {createTodos} from "./db.ts";
+import {createTodos, UpdateTodo, updateTodo} from "./db.ts";
 import {TodoDetails} from "../lib/types/database.types.ts";
 import {getUserQuery} from "./query.ts";
 
@@ -14,6 +14,17 @@ export const useCreateTodo = () => {
         },
         onError: async (error) => {
             console.log(error.message);
+        }
+    });
+};
+
+//TODO: refactor to optimistic query update for later
+export const useUpdateTodo = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (payload: UpdateTodo) => updateTodo(payload),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ["todos"]});
         }
     });
 };

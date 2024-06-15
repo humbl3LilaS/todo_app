@@ -29,3 +29,17 @@ export const createTodos = async (input: TodoDetails["todos_details"], userId: s
     return detailResponse as TodoDetails["todos_details"];
 };
 
+
+export type UpdateTodo = {
+    data: Partial<TodoDetails["todos_details"]>
+    todoId: string | undefined;
+}
+export const updateTodo = async (payload: UpdateTodo) => {
+    const {data, error} = await superbase.from("todos_details")
+        .update({...payload.data})
+        .eq("id", payload.todoId)
+        .select();
+
+    console.log(data);
+};
+
