@@ -16,21 +16,25 @@ export default function Home() {
             {
                 today &&
               <div>
-                <h2 className={"pb-3 border-b border-b-stone-600 text-2xl font-bold text-stone-700"}>Today</h2>
-                  {today.map(todo => <p key={todo.todos_details.id}>{todo.todos_details.content}</p>)}
+                <h2 className={"pb-3 mb-4 border-b border-b-stone-600 text-2xl font-bold text-stone-700"}>Today</h2>
+                <div className={"mb-4"}>
+                    {today.map(todo => <TodoItem key={todo.todos_details.id} data={todo.todos_details}/>)}
+                </div>
               </div>
             }
             {
                 upcoming &&
               <div>
-                <h2 className={"pb-3 border-b border-b-stone-600 text-2xl font-bold text-stone-700"}>Upcoming</h2>
-                  {upcoming.map(todo => <p key={todo.todos_details.id}>{todo.todos_details.content}</p>)}
+                <h2 className={"pb-3 mb-4 border-b border-b-stone-600 text-2xl font-bold text-stone-700"}>Upcoming</h2>
+                <div className={"mb-4"}>
+                    {upcoming.map(todo => <TodoItem key={todo.todos_details.id} data={todo.todos_details}/>)}
+                </div>
               </div>
             }
             {
                 overdue &&
               <div>
-                <h2 className={"pb-3 mb-4  border-b border-b-stone-600 text-2xl font-bold text-stone-700"}>
+                <h2 className={"pb-3 mb-4 border-b border-b-stone-600 text-2xl font-bold text-stone-700"}>
                   Overdue
                 </h2>
                 <div>
