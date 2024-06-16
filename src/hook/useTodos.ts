@@ -5,7 +5,7 @@ type UseTodosOptions = {
     select: "unfinished" | "finished" | "all";
 }
 
-// TODO: refactor later to be able used across multiple route
+// TODO: call redundant query call inside this function
 export const useTodo = (data: TodoDetails[], options: UseTodosOptions) => {
     switch (options?.select) {
         case "unfinished":

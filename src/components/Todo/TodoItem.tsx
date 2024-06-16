@@ -12,7 +12,7 @@ export default function TodoItem({data}: Props) {
     const {mutateAsync} = useUpdateTodo();
     const onCheck = async () => {
         setCompleted(prevState => !prevState);
-        await mutateAsync({data: {is_finish: !completed}, todoId: data.id});
+        await mutateAsync({data: {is_finish: !completed, finished_at: new Date().toISOString()}, todoId: data.id});
     };
 
     return (

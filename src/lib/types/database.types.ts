@@ -11,7 +11,7 @@ export interface TodoDetails {
         content: string;
         priority?: Rating | null;
         created_at?: string;
-        finish_at?: string | null;
+        finished_at?: string | null;
         due_at?: Date | null;
         is_finish?: boolean;
     };
@@ -20,5 +20,9 @@ export interface TodoDetails {
 export const enum TodoComparator {
     OVERDUE,
     TODAY,
-    UPCOMING
+    UPCOMING,
+    YESTERDAY,
+    LASTWEEK,
+    LASTMONTH,
+    THISWEEK
 }
