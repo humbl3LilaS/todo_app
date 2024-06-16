@@ -1,6 +1,6 @@
 import Container from "../Helper/Container.tsx";
 import {getUserQuery, useGetTodosQuery} from "../../query/query.ts";
-import {useCategorizedTodo} from "../../hook/useTodos.ts";
+import {useCategorizedTodo} from "../../hook/useCategorizedTodo.ts";
 import {useQuery} from "@tanstack/react-query";
 import TodoItem from "../Todo/TodoItem.tsx";
 
