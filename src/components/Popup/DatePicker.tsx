@@ -14,7 +14,6 @@ export default function DatePicker() {
 
     useEffect(() => {
         setDue(date);
-        console.log(date)
     }, [date, setDue]);
 
     return (

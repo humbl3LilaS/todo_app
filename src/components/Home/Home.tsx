@@ -1,13 +1,13 @@
 import Container from "../Helper/Container.tsx";
 import {getUserQuery, useGetTodosQuery} from "../../query/query.ts";
-import {useTodos} from "../../hook/useTodos.ts";
+import {useCategorizedTodo} from "../../hook/useTodos.ts";
 import {useQuery} from "@tanstack/react-query";
 import TodoItem from "../Todo/TodoItem.tsx";
 
 export default function Home() {
     const {data: userId} = useQuery(getUserQuery());
     const {data} = useGetTodosQuery(userId ?? "");
-    const {upcoming, today, overdue, noDue} = useTodos(data ?? []);
+    const {upcoming, today, overdue, noDue} = useCategorizedTodo(data ?? []);
     return (
         <Container className={"w-4/5 h-screen"}>
             <h1 className={"pb-3 border-b border-b-stone-600 text-3xl font-bold text-stone-700"}>
